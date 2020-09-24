@@ -2034,24 +2034,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Fish",
   mounted: function mounted() {
     this.$store.dispatch('fetchPosts');
   },
+  data: function data() {
+    return {
+      selectedFish: ''
+    };
+  },
   methods: {
     deletePost: function deletePost(post) {
       this.$store.dispatch('deletePost', post);
     },
-    selectDrink: function selectDrink() {
-      this.selectedOption = '';
-    },
     changeQuantity: function changeQuantity(event) {
-      //console.log('changed');
-      //console.log(this.posts);
-      //console.log(event.target.value);
-      this.$refs.fishquantity.value = event.target.value; //console.log(this.$refs.fishquantity.value);
+      this.$refs.fishquantity.value = event.target.value;
+      console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue); //console.log(event.target.data-fish);
+    },
+    addToCart: function addToCart() {
+      //this.$store.dispatch('addProductToCart', {
+      //product: this.selectedFish.text
+      // console.log(this.selectedFish.text);
+      console.log(data);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['posts']))
@@ -37766,12 +37773,30 @@ var render = function() {
             }
           }
         },
-        _vm._l(_vm.posts, function(post) {
-          return _c("option", { domProps: { value: post.id } }, [
-            _vm._v(_vm._s(post.title) + "\n             ")
-          ])
-        }),
-        0
+        [
+          _c("option", { attrs: { disabled: "", value: "" } }, [
+            _vm._v("Please select one")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.posts, function(post) {
+            return _c(
+              "option",
+              {
+                attrs: { "data-fish": post.title },
+                domProps: { value: post.id }
+              },
+              [
+                _vm._v(
+                  _vm._s(post.title) +
+                    "(Rs." +
+                    _vm._s(post.price) +
+                    "/Kg)\n             "
+                )
+              ]
+            )
+          })
+        ],
+        2
       )
     ]),
     _vm._v(" "),
@@ -37794,7 +37819,25 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(2)
+    _c("div", { staticClass: "text-right" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn mt-2",
+          staticStyle: { background: "#16ADD6" },
+          on: {
+            click: function($event) {
+              return _vm.addToCart()
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fas fa-shopping-basket text-white" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "pl-2" }, [_vm._v("Add to Cart")])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -37821,22 +37864,6 @@ var staticRenderFns = [
         [
           _c("i", { staticClass: "fas fa-weight-hanging" }),
           _vm._v("     Quantity")
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-right" }, [
-      _c(
-        "button",
-        { staticClass: "btn mt-2", staticStyle: { background: "#16ADD6" } },
-        [
-          _c("i", { staticClass: "fas fa-shopping-basket text-white" }),
-          _vm._v(" "),
-          _c("span", { staticClass: "pl-2" }, [_vm._v("Add to Cart")])
         ]
       )
     ])
@@ -52260,7 +52287,8 @@ var mutations = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  posts: []
+  posts: [],
+  cart: []
 };
 /* harmony default export */ __webpack_exports__["default"] = (state);
 

@@ -1,5 +1,6 @@
 let state = {
-    posts: []
+    posts: [],
+    cart: []
 }
 
 export default state

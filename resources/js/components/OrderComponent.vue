@@ -5,9 +5,10 @@
                 <label class="input-group-text" for="fishtype"><i class="fas fa-fish"></i> &nbsp; Fish Type</label>
             </div>
             <select @change="changeQuantity($event)" class="custom-select" id="fishtype" ref="fishtype">
+                <option disabled value="">Please select one</option>
                 <option
                  v-for="post in posts"
-                 :value="post.id">{{post.title}}
+                 :value="post.id" :data-fish ="post.title">{{post.title}}(Rs.{{post.price}}/Kg)
                  </option>               
             </select>
         </div>
@@ -28,7 +29,7 @@
         </div>
 
             <div class="text-right">
-                <button class="btn mt-2" style="background: #16ADD6;"><i class="fas fa-shopping-basket text-white"></i> <span class="pl-2">Add to Cart</span></button>
+                <button class="btn mt-2" @click="addToCart()" style="background: #16ADD6;"><i class="fas fa-shopping-basket text-white"></i> <span class="pl-2">Add to Cart</span></button>
             </div>
     </div>
 
@@ -41,23 +42,36 @@
     export default {
         name: "Fish",
         mounted() {
+            
             this.$store.dispatch('fetchPosts')
+            
+            
+        },
+        data(){
+            return {
+                selectedFish:'',
+            }
         },
         methods: {
             deletePost(post) {
                 this.$store.dispatch('deletePost',post)
             },
-            selectDrink:function() {
-            this.selectedOption = '';
-            },
+            
             changeQuantity(event){
-                //console.log('changed');
-                //console.log(this.posts);
-                //console.log(event.target.value);
+                
                 this.$refs.fishquantity.value = event.target.value;
-                //console.log(this.$refs.fishquantity.value);
+                console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue);
+                //console.log(event.target.data-fish);
 
+            },
+            addToCart(){
+                //this.$store.dispatch('addProductToCart', {
+                    //product: this.selectedFish.text
+                   // console.log(this.selectedFish.text);
+                   console.log(data);
+                
             }
+
         },
         computed: {
             ...mapGetters([
