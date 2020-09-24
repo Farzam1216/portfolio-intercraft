@@ -13,9 +13,9 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'M. Usman Bhatti',
-                'email' => 'mubhatti@intercraftsol.com',
-                'mobile' => 3495101066,
+                'name' => 'Ghazi',
+                'email' => 'ghaziislam3@gmail.com',
+                'mobile' => 3024024838,
                 'password' => Hash::make("Intercraftsol"),
                 'role' => 'admin',
             ]

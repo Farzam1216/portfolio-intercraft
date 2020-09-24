@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('posts', 'FishController@store');
+
+Route::get('posts', 'FishController@get');
+
+Route::delete('posts/{id}', 'FishController@delete');
