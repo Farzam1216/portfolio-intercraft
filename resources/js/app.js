@@ -22,7 +22,7 @@ import store from './store/index'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'))
+Vue.component('example-component', require('./components/ExampleComponent.vue').default)
 Vue.component('order-component', require('./components/OrderComponent.vue').default)
 
 /**
