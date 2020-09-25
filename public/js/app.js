@@ -1974,6 +1974,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    cart: function cart() {
+      return this.$store.state.cart;
+    }
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -2050,15 +2055,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     deletePost: function deletePost(post) {
       this.$store.dispatch('deletePost', post);
     },
+    addToCart: function addToCart() {
+      this.$store.commit('addToCart', {
+        product: "Fish1",
+        quantity: 1,
+        price: 376
+      });
+    },
+
+    /* addToCart(){
+         this.$store.dispatch("addProductToCart", {
+            product:"Fish1", 
+            quantity:1
+        }); */
+    //console.log("hello");
+    //console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue);
+    //console.log(product);
+    //},
     changeQuantity: function changeQuantity(event) {
       this.$refs.fishquantity.value = event.target.value;
-      console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue); //console.log(event.target.data-fish);
-    },
-    addToCart: function addToCart() {
-      //this.$store.dispatch('addProductToCart', {
-      //product: this.selectedFish.text
-      // console.log(this.selectedFish.text);
-      console.log(data);
+      console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue);
+      console.log(event.target.options[event.target.selectedIndex].attributes['data-fprice'].value); //console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue);
+      //console.log(event.target.data-fish);
+      //this.addToCart();
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['posts']))
@@ -37648,92 +37667,141 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { attrs: { id: "orderSummary" } }, [
+    _c("h4", [_vm._v("Order Summary")]),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "order_items" } }, [
+      _c(
+        "div",
+        { staticClass: "row order_item" },
+        [
+          _vm._l(_vm.cart, function(item) {
+            return _c(
+              "div",
+              { key: "item.product", staticClass: "col-4 desc" },
+              [
+                _vm._v(
+                  "\n                " + _vm._s(item.product) + "\n            "
+                )
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.cart, function(item) {
+            return _c(
+              "div",
+              {
+                key: "item.quantity item.price",
+                staticClass: "col-4 quantity"
+              },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(item.quantity) +
+                    " x " +
+                    _vm._s(item.price) +
+                    "\n            "
+                )
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 price" }, [
+            _vm._v("\n                Rs. 1875.00\n            ")
+          ])
+        ],
+        2
+      )
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3),
+    _vm._v(" "),
+    _vm._m(4)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "orderSummary" } }, [
-      _c("h4", [_vm._v("Order Summary")]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "order_items" } }, [
-        _c("div", { staticClass: "row order_item" }, [
-          _c("div", { staticClass: "col-4 desc" }, [
-            _vm._v("\n                Pangasius\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-4 quantity" }, [
-            _vm._v("\n                5 x 375\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-4 price" }, [
-            _vm._v("\n                Rs. 1875.00\n            ")
-          ])
+    return _c("div", { staticClass: "p-2", attrs: { id: "subtotal" } }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-6 text-left desc" }, [
+          _vm._v("\n                Subtotal\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 text-right price" }, [
+          _vm._v("\n                Rs. 1875.00\n            ")
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2", attrs: { id: "subtotal" } }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-6 text-left desc" }, [
-            _vm._v("\n                Subtotal\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-6 text-right price" }, [
-            _vm._v("\n                Rs. 1875.00\n            ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2", attrs: { id: "balance" } }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-6 text-left desc" }, [
-            _vm._v("\n                Outstanding Balance\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-6 text-right price" }, [
-            _vm._v("\n                Rs. -200.00\n            ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2", attrs: { id: "deliverycharges" } }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-6 text-left desc" }, [
-            _vm._v("\n                Delivery Fee\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-6 text-right price" }, [
-            _vm._v("\n                Rs. 100.00\n            ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2", attrs: { id: "grandtotal" } }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-6 text-left desc" }, [
-            _vm._v("\n                Grand Total\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-6 text-right price" }, [
-            _vm._v("\n                Rs. 1775.00\n            ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-info btn-lg btn-block mt-2 mb-2 text-white",
-          staticStyle: { background: "#16ADD6" }
-        },
-        [
-          _c("i", { staticClass: "fas fa-shopping-bag" }),
-          _vm._v("   CHECK OUT")
-        ]
-      )
+      ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-2", attrs: { id: "balance" } }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-6 text-left desc" }, [
+          _vm._v("\n                Outstanding Balance\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 text-right price" }, [
+          _vm._v("\n                Rs. -200.00\n            ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-2", attrs: { id: "deliverycharges" } }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-6 text-left desc" }, [
+          _vm._v("\n                Delivery Fee\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 text-right price" }, [
+          _vm._v("\n                Rs. 100.00\n            ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-2", attrs: { id: "grandtotal" } }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-6 text-left desc" }, [
+          _vm._v("\n                Grand Total\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 text-right price" }, [
+          _vm._v("\n                Rs. 1775.00\n            ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-info btn-lg btn-block mt-2 mb-2 text-white",
+        staticStyle: { background: "#16ADD6" }
+      },
+      [_c("i", { staticClass: "fas fa-shopping-bag" }), _vm._v("   CHECK OUT")]
+    )
   }
 ]
 render._withStripped = true
@@ -37782,7 +37850,7 @@ var render = function() {
             return _c(
               "option",
               {
-                attrs: { "data-fish": post.title },
+                attrs: { "data-fish": post.title, "data-fprice": post.price },
                 domProps: { value: post.id }
               },
               [
@@ -37823,6 +37891,7 @@ var render = function() {
       _c(
         "button",
         {
+          ref: "fishcart",
           staticClass: "btn mt-2",
           staticStyle: { background: "#16ADD6" },
           on: {
@@ -52195,6 +52264,10 @@ var actions = {
       console.log(err);
     });
   }
+  /*  addProductToCart({commit}, { product, quantity}) => {
+      commit('ADD_TO_CART', { product, quantity});
+  }  */
+
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
 
@@ -52271,7 +52344,24 @@ var mutations = {
       return item.id === post.id;
     });
     state.posts.splice(index, 1);
+  },
+  addToCart: function addToCart(state, _ref) {
+    var product = _ref.product,
+        quantity = _ref.quantity,
+        price = _ref.price;
+    state.cart.push({
+      product: product,
+      quantity: quantity,
+      price: price
+    });
   }
+  /* ADD_TO_CART(state, { product, quantity})  {
+      state.cart.push({
+          product,
+          quantity
+      })
+  } */
+
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
 

@@ -23,6 +23,10 @@ let actions = {
             }).catch(err => {
             console.log(err)
         })
-    }
+    },
+
+    /*  addProductToCart({commit}, { product, quantity}) => {
+        commit('ADD_TO_CART', { product, quantity});
+    }  */
 }
 export default actions

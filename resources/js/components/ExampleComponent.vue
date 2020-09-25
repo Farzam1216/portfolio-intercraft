@@ -3,11 +3,11 @@
         <h4>Order Summary</h4>
         <div id="order_items">
             <div class="row order_item">
-                <div class="col-4 desc">
-                    Pangasius
+                <div v-for="item in cart" key="item.product" class="col-4 desc">
+                    {{item.product}}
                 </div>
-                <div class="col-4 quantity">
-                    5 x 375
+                <div v-for="item in cart" key="item.quantity item.price" class="col-4 quantity">
+                    {{item.quantity}} x {{item.price}}
                 </div>
                 <div class="col-4 price">
                     Rs. 1875.00
@@ -65,7 +65,15 @@
 
 <script>
     export default {
-        mounted() {
+       
+       computed: {
+         cart() {
+             return this.$store.state.cart;
+         }
+         
+       },
+       
+       mounted() {
             console.log('Component mounted.')
         }
     }
