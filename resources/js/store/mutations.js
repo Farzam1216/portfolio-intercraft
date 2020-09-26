@@ -10,8 +10,8 @@ let mutations = {
         state.posts.splice(index, 1)
     },
 
-    addToCart(state, {product,quantity,price}) {
-        state.cart.push({product,quantity,price});
+    addToCart(state, item) {
+        state.cart.push(item);
 
         
     }

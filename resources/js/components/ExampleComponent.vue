@@ -4,7 +4,7 @@
         <div id="order_items">
             <div class="row order_item">
                 <div v-for="item in cart" key="item.product" class="col-4 desc">
-                    {{item.product}}
+                    {{item.title}}
                 </div>
                 <div v-for="item in cart" key="item.quantity item.price" class="col-4 quantity">
                     {{item.quantity}} x {{item.price}}

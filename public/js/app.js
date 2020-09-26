@@ -2048,23 +2048,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      selectedFish: ''
+      selectedFish: '',
+      item: {}
     };
   },
   methods: {
     deletePost: function deletePost(post) {
       this.$store.dispatch('deletePost', post);
     },
-    addToCart: function addToCart() {
-      this.$store.commit('addToCart', {
-        product: "Fish1",
-        quantity: 1,
-        price: 376
-      });
+    addToCart: function addToCart(item) {
+      this.$store.commit('addToCart', item);
     },
 
     /* addToCart(){
-         this.$store.dispatch("addProductToCart", {
+        this.$store.dispatch("addProductToCart", {
             product:"Fish1", 
             quantity:1
         }); */
@@ -2074,10 +2071,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //},
     changeQuantity: function changeQuantity(event) {
       this.$refs.fishquantity.value = event.target.value;
-      console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue);
-      console.log(event.target.options[event.target.selectedIndex].attributes['data-fprice'].value); //console.log(event.target.options[event.target.selectedIndex].attributes['data-fish'].nodeValue);
+      this.item.id = event.target.options[event.target.selectedIndex].attributes['data-fid'].nodeValue;
+      this.item.title = event.target.options[event.target.selectedIndex].attributes['data-ftitle'].value;
+      this.item.price = event.target.options[event.target.selectedIndex].attributes['data-fprice'].nodeValue;
+      this.item.quantity = this.$refs.fishquantity.value; //console.log(item);
+      //console.log(event.target.options[event.target.selectedIndex].attributes['data-fid'].nodeValue);
+      //console.log(event.target.options[event.target.selectedIndex].attributes['data-ftitle'].value);
+      //console.log(event.target.options[event.target.selectedIndex].attributes['data-fprice'].nodeValue);
       //console.log(event.target.data-fish);
-      //this.addToCart();
+      //this.addToCart(item);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['posts']))
@@ -37681,7 +37683,7 @@ var render = function() {
               { key: "item.product", staticClass: "col-4 desc" },
               [
                 _vm._v(
-                  "\n                " + _vm._s(item.product) + "\n            "
+                  "\n                " + _vm._s(item.title) + "\n            "
                 )
               ]
             )
@@ -37850,7 +37852,11 @@ var render = function() {
             return _c(
               "option",
               {
-                attrs: { "data-fish": post.title, "data-fprice": post.price },
+                attrs: {
+                  "data-fid": post.id,
+                  "data-ftitle": post.title,
+                  "data-fprice": post.price
+                },
                 domProps: { value: post.id }
               },
               [
@@ -37896,7 +37902,7 @@ var render = function() {
           staticStyle: { background: "#16ADD6" },
           on: {
             click: function($event) {
-              return _vm.addToCart()
+              return _vm.addToCart(_vm.item)
             }
           }
         },
@@ -52345,15 +52351,8 @@ var mutations = {
     });
     state.posts.splice(index, 1);
   },
-  addToCart: function addToCart(state, _ref) {
-    var product = _ref.product,
-        quantity = _ref.quantity,
-        price = _ref.price;
-    state.cart.push({
-      product: product,
-      quantity: quantity,
-      price: price
-    });
+  addToCart: function addToCart(state, item) {
+    state.cart.push(item);
   }
   /* ADD_TO_CART(state, { product, quantity})  {
       state.cart.push({
