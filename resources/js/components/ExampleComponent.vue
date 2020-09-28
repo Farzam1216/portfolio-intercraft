@@ -1,6 +1,6 @@
 <template>
     <div id="orderSummary">
-        <h4>Order Summary</h4>
+        <h4>Order Summary Cart ({{ $store.state.cartCount }})</h4>
         <div id="order_items">
             <div v-for="item in cart" :key="item.id" class="row order_item">
                 
@@ -11,7 +11,10 @@
                     {{item.quantity}} x {{item.price}} 
                 </div>
                 <div class="col-4 price">
-                    Rs. 1875.00
+                    <span class="removeBtn"
+                       title="Remove from cart"
+                       @click.prevent="removeFromCart(item)">X
+                    </span>
                 </div>
             </div>
         </div>
@@ -22,7 +25,7 @@
                     Subtotal
                 </div>
                 <div class="col-6 text-right price">
-                    Rs. 1875.00
+                     Rs.{{ totalPrice }}
                 </div>
             </div>
         </div>
@@ -55,7 +58,7 @@
                     Grand Total
                 </div>
                 <div class="col-6 text-right price">
-                    {{ totalPrice }}
+                    Rs.{{ totalPrice }}
                 </div>
             </div>
         </div>
@@ -66,6 +69,12 @@
 
 <script>
     export default {
+
+        methods: {
+          removeFromCart(item) {
+              this.$store.commit('removeFromCart', item);
+          }
+        },
        
        computed: {
          cart() {
@@ -73,14 +82,15 @@
              
          },
          totalPrice() {
-           let total = 0;
-            for (let item of this.$store.state.cart) {
-               total += item.totalPrice;
-           }
-           
-
-          return total.toFixed(2);
-        }
+             let total = 0;
+     
+             for (let item of this.$store.state.cart) {
+                 total += item.totalPrice;
+             }
+     
+             return total.toFixed(2);
+            },
+          
          
        },
        
@@ -90,3 +100,10 @@
     }
     
 </script>
+
+<style>
+.removeBtn {
+    margin-right: 1rem;
+    color: red;
+}
+</style>

@@ -1,6 +1,7 @@
 let state = {
     posts: [],
-    cart: []
+    cart: [],
+    cartCount: 0,
     
 }
 
