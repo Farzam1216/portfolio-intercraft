@@ -15,7 +15,7 @@ let mutations = {
 
     addToCart(state, item) {
 
-        Vue.set(item, 'quantity', item.quantity);
+        /* Vue.set(item, 'quantity', item.quantity);
         Vue.set(item, 'totalPrice', item.price);
         
         let found = state.cart.find(product => product.id == item.id);
@@ -32,9 +32,21 @@ let mutations = {
 
         state.cartCount++;
 
-        }
+        } */
 
         //this.commit('saveCart');
+
+        let found = state.cart.find(product => product.id == item.id);
+
+        if (found) {
+            found.quantity = parseInt(found.quantity) + parseInt(item.quantity);
+            //found.totalPrice = found.quantity * found.price;
+            return;
+        }
+
+        state.cart.push(item);
+
+        state.cartCount++;
 
         
         

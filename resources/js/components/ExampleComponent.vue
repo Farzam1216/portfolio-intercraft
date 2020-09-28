@@ -25,7 +25,7 @@
                     Subtotal
                 </div>
                 <div class="col-6 text-right price">
-                     Rs.{{ totalPrice }}
+                     Rs.{{ cartPrice }}
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                     Grand Total
                 </div>
                 <div class="col-6 text-right price">
-                    Rs.{{ totalPrice }}
+                    Rs.{{ cartPrice }}
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
              return this.$store.state.cart;
              
          },
-         totalPrice() {
+        /*  totalPrice() {
              let total = 0;
      
              for (let item of this.$store.state.cart) {
@@ -90,6 +90,21 @@
      
              return total.toFixed(2);
             },
+
+            
+ */
+          cartPrice() {
+              let total = 0;
+
+              for (let item of this.$store.state.cart) {
+
+              total += item.price * item.quantity;
+              
+             }
+               return total.toFixed(2);
+          } 
+
+          
           
          
        },

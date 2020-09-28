@@ -1993,7 +1993,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     cart: function cart() {
       return this.$store.state.cart;
     },
-    totalPrice: function totalPrice() {
+
+    /*  totalPrice() {
+         let total = 0;
+              for (let item of this.$store.state.cart) {
+             total += item.totalPrice;
+         }
+              return total.toFixed(2);
+        },
+         
+    */
+    cartPrice: function cartPrice() {
       var total = 0;
 
       var _iterator = _createForOfIteratorHelper(this.$store.state.cart),
@@ -2002,7 +2012,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var item = _step.value;
-          total += item.totalPrice;
+          total += item.price * item.quantity;
         }
       } catch (err) {
         _iterator.e(err);
@@ -38405,7 +38415,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-6 text-right price" }, [
           _vm._v(
-            "\n                 Rs." + _vm._s(_vm.totalPrice) + "\n            "
+            "\n                 Rs." + _vm._s(_vm.cartPrice) + "\n            "
           )
         ])
       ])
@@ -38423,7 +38433,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-6 text-right price" }, [
           _vm._v(
-            "\n                Rs." + _vm._s(_vm.totalPrice) + "\n            "
+            "\n                Rs." + _vm._s(_vm.cartPrice) + "\n            "
           )
         ])
       ])
@@ -52979,10 +52989,19 @@ var getters = {
   posts: function posts(state) {
     return state.posts;
   },
-  cartTotalPrice: function cartTotalPrice(state) {
+
+  /* cartTotalPrice: state => {
+      let total = 0;
+        state.cart.foreach(item => {
+          total += item.price * item.quantity;
+      })
+  },
+  */
+  cartPrice: function cartPrice(state) {
     var total = 0;
-    state.cart.foreach(function (item) {
+    state.cart.forEach(function (item) {
       total += item.price * item.quantity;
+      return total.toFixed(2);
     });
   }
 };
@@ -53047,24 +53066,35 @@ var mutations = {
     state.posts.splice(index, 1);
   },
   addToCart: function addToCart(state, item) {
+    /* Vue.set(item, 'quantity', item.quantity);
+    Vue.set(item, 'totalPrice', item.price);
+    
+    let found = state.cart.find(product => product.id == item.id);
+    if (found) {
+        found.quantity = parseInt(found.quantity) + parseInt(item.quantity);
+        found.totalPrice = found.quantity * found.price;
+        //console.log(found.quantity);
+    }
+    else {
+      state.cart.push(item);
     Vue.set(item, 'quantity', item.quantity);
     Vue.set(item, 'totalPrice', item.price);
+      state.cartCount++;
+      } */
+    //this.commit('saveCart');
     var found = state.cart.find(function (product) {
       return product.id == item.id;
     });
 
     if (found) {
-      found.quantity = parseInt(found.quantity) + parseInt(item.quantity);
-      found.totalPrice = found.quantity * found.price; //console.log(found.quantity);
-    } else {
-      state.cart.push(item);
-      Vue.set(item, 'quantity', item.quantity);
-      Vue.set(item, 'totalPrice', item.price);
-      state.cartCount++;
-    } //this.commit('saveCart');
-    //console.log("item before pushing:" , item);
-    //console.log("after pushing into cart:",state.cart);
+      found.quantity = parseInt(found.quantity) + parseInt(item.quantity); //found.totalPrice = found.quantity * found.price;
 
+      return;
+    }
+
+    state.cart.push(item);
+    state.cartCount++; //console.log("item before pushing:" , item);
+    //console.log("after pushing into cart:",state.cart);
   },
   removeFromCart: function removeFromCart(state, item) {
     var index = state.cart.indexOf(item);
