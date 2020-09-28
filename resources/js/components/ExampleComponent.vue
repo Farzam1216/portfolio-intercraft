@@ -2,12 +2,13 @@
     <div id="orderSummary">
         <h4>Order Summary</h4>
         <div id="order_items">
-            <div class="row order_item">
-                <div v-for="item in cart" key="item.product" class="col-4 desc">
+            <div v-for="item in cart" :key="item.id" class="row order_item">
+                
+                <div class="col-4 desc">
                     {{item.title}}
                 </div>
-                <div v-for="item in cart" key="item.quantity item.price" class="col-4 quantity">
-                    {{item.quantity}} x {{item.price}}
+                <div class="col-4 quantity">
+                    {{item.quantity}} x {{item.price}} 
                 </div>
                 <div class="col-4 price">
                     Rs. 1875.00
@@ -54,7 +55,7 @@
                     Grand Total
                 </div>
                 <div class="col-6 text-right price">
-                    Rs. 1775.00
+                    {{ totalPrice }}
                 </div>
             </div>
         </div>
@@ -69,7 +70,17 @@
        computed: {
          cart() {
              return this.$store.state.cart;
-         }
+             
+         },
+         totalPrice() {
+           let total = 0;
+            for (let item of this.$store.state.cart) {
+               total += item.totalPrice;
+           }
+           
+
+          return total.toFixed(2);
+        }
          
        },
        
@@ -77,4 +88,5 @@
             console.log('Component mounted.')
         }
     }
+    
 </script>

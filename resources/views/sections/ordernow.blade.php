@@ -11,7 +11,9 @@
                 </div>
 
                 <div class="col-md-6">
+                    <div id="app">
                  <example-component></example-component>
+                    </div>
                 </div>
             </div>
         </div>

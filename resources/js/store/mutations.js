@@ -11,7 +11,12 @@ let mutations = {
     },
 
     addToCart(state, item) {
+        
+
         state.cart.push(item);
+        
+        //console.log("item before pushing:" , item);
+        //console.log("after pushing into cart:",state.cart);
 
         
     }

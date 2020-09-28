@@ -8,7 +8,7 @@
                 <option disabled value="">Please select one</option>
                 <option
                  v-for="post in posts"
-                 :value="post.id" :data-fid ="post.id" :data-ftitle ="post.title" :data-fprice ="post.price">{{post.title}}(Rs.{{post.price}}/Kg)
+                 :value="post.quantity" :data-fid ="post.id" :data-ftitle ="post.title" :data-fprice ="post.price">{{post.title}}(Rs.{{post.price}}/Kg)
                  </option>               
             </select>
         </div>
@@ -18,10 +18,10 @@
                 <label class="input-group-text" for="orderquantity"><i class="fas fa-weight-hanging"></i> &nbsp; &nbsp; Quantity</label>
             </div>
                             
-            <select  class="custom-select" id="fishquantity" ref="fishquantity">
+            <select class="custom-select" id="fishquantity" ref="fishquantity">
                 <option
                  v-for="post in posts"
-                 :value="post.id">{{post.quantity}}
+                 :value="post.quantity">{{post.quantity}}
                  </option>               
             </select>
                             
@@ -29,7 +29,7 @@
         </div>
 
             <div class="text-right">
-                <button class="btn mt-2" @click="addToCart(item)" style="background: #16ADD6;" ref="fishcart"><i class="fas fa-shopping-basket text-white"></i> <span class="pl-2">Add to Cart</span></button>
+                <button class="btn mt-2" @click="addToCart" style="background: #16ADD6;" ref="fishcart"><i class="fas fa-shopping-basket text-white"></i> <span class="pl-2">Add to Cart</span></button>
             </div>
     </div>
 
@@ -43,23 +43,28 @@
         mounted() {
             
             this.$store.dispatch('fetchPosts')
+
             
             
         },
         data(){
 
             return {
-                selectedFish:'',
+                
                 item: {}
+                
 
             }
+            
         },
         methods: {
             deletePost(post) {
                 this.$store.dispatch('deletePost',post)
             },
-            addToCart(item) {
+            addToCart() {
+                let item = {...this.item};
                 this.$store.commit('addToCart', item);
+                console.log( "item:", item);
             },
             /* addToCart(){
                 this.$store.dispatch("addProductToCart", {
@@ -85,6 +90,9 @@
                 this.item.price = event.target.options[event.target.selectedIndex].attributes['data-fprice'].nodeValue;
                 this.item.quantity = this.$refs.fishquantity.value; 
                 
+                //console.log(this.item);
+                //console.log(event.target.options[event.target.selectedIndex].attributes);
+                
                 //console.log(item);
                 //console.log(event.target.options[event.target.selectedIndex].attributes['data-fid'].nodeValue);
                 //console.log(event.target.options[event.target.selectedIndex].attributes['data-ftitle'].value);
@@ -93,6 +101,8 @@
                 //this.addToCart(item);
                 
             },
+
+            
             
         },
         computed: {

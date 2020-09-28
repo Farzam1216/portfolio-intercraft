@@ -1908,6 +1908,13 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
 //
 //
 //
@@ -1977,6 +1984,25 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     cart: function cart() {
       return this.$store.state.cart;
+    },
+    totalPrice: function totalPrice() {
+      var total = 0;
+
+      var _iterator = _createForOfIteratorHelper(this.$store.state.cart),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var item = _step.value;
+          total += item.totalPrice;
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return total.toFixed(2);
     }
   },
   mounted: function mounted() {
@@ -2048,7 +2074,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      selectedFish: '',
       item: {}
     };
   },
@@ -2056,8 +2081,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     deletePost: function deletePost(post) {
       this.$store.dispatch('deletePost', post);
     },
-    addToCart: function addToCart(item) {
+    addToCart: function addToCart() {
+      var item = _objectSpread({}, this.item);
+
       this.$store.commit('addToCart', item);
+      console.log("item:", item);
     },
 
     /* addToCart(){
@@ -2074,7 +2102,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.item.id = event.target.options[event.target.selectedIndex].attributes['data-fid'].nodeValue;
       this.item.title = event.target.options[event.target.selectedIndex].attributes['data-ftitle'].value;
       this.item.price = event.target.options[event.target.selectedIndex].attributes['data-fprice'].nodeValue;
-      this.item.quantity = this.$refs.fishquantity.value; //console.log(item);
+      this.item.quantity = this.$refs.fishquantity.value; //console.log(this.item);
+      //console.log(event.target.options[event.target.selectedIndex].attributes);
+      //console.log(item);
       //console.log(event.target.options[event.target.selectedIndex].attributes['data-fid'].nodeValue);
       //console.log(event.target.options[event.target.selectedIndex].attributes['data-ftitle'].value);
       //console.log(event.target.options[event.target.selectedIndex].attributes['data-fprice'].nodeValue);
@@ -37672,49 +37702,32 @@ var render = function() {
   return _c("div", { attrs: { id: "orderSummary" } }, [
     _c("h4", [_vm._v("Order Summary")]),
     _vm._v(" "),
-    _c("div", { attrs: { id: "order_items" } }, [
-      _c(
-        "div",
-        { staticClass: "row order_item" },
-        [
-          _vm._l(_vm.cart, function(item) {
-            return _c(
-              "div",
-              { key: "item.product", staticClass: "col-4 desc" },
-              [
-                _vm._v(
-                  "\n                " + _vm._s(item.title) + "\n            "
-                )
-              ]
-            )
-          }),
+    _c(
+      "div",
+      { attrs: { id: "order_items" } },
+      _vm._l(_vm.cart, function(item) {
+        return _c("div", { key: item.id, staticClass: "row order_item" }, [
+          _c("div", { staticClass: "col-4 desc" }, [
+            _vm._v("\n                " + _vm._s(item.title) + "\n            ")
+          ]),
           _vm._v(" "),
-          _vm._l(_vm.cart, function(item) {
-            return _c(
-              "div",
-              {
-                key: "item.quantity item.price",
-                staticClass: "col-4 quantity"
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(item.quantity) +
-                    " x " +
-                    _vm._s(item.price) +
-                    "\n            "
-                )
-              ]
+          _c("div", { staticClass: "col-4 quantity" }, [
+            _vm._v(
+              "\n                " +
+                _vm._s(item.quantity) +
+                " x " +
+                _vm._s(item.price) +
+                " \n            "
             )
-          }),
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-4 price" }, [
             _vm._v("\n                Rs. 1875.00\n            ")
           ])
-        ],
-        2
-      )
-    ]),
+        ])
+      }),
+      0
+    ),
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
@@ -37722,9 +37735,21 @@ var render = function() {
     _vm._v(" "),
     _vm._m(2),
     _vm._v(" "),
-    _vm._m(3),
+    _c("div", { staticClass: "p-2", attrs: { id: "grandtotal" } }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-6 text-left desc" }, [
+          _vm._v("\n                Grand Total\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6 text-right price" }, [
+          _vm._v(
+            "\n                " + _vm._s(_vm.totalPrice) + "\n            "
+          )
+        ])
+      ])
+    ]),
     _vm._v(" "),
-    _vm._m(4)
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -37772,22 +37797,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "col-6 text-right price" }, [
           _vm._v("\n                Rs. 100.00\n            ")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-2", attrs: { id: "grandtotal" } }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-6 text-left desc" }, [
-          _vm._v("\n                Grand Total\n            ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6 text-right price" }, [
-          _vm._v("\n                Rs. 1775.00\n            ")
         ])
       ])
     ])
@@ -37857,7 +37866,7 @@ var render = function() {
                   "data-ftitle": post.title,
                   "data-fprice": post.price
                 },
-                domProps: { value: post.id }
+                domProps: { value: post.quantity }
               },
               [
                 _vm._v(
@@ -37885,7 +37894,7 @@ var render = function() {
           attrs: { id: "fishquantity" }
         },
         _vm._l(_vm.posts, function(post) {
-          return _c("option", { domProps: { value: post.id } }, [
+          return _c("option", { domProps: { value: post.quantity } }, [
             _vm._v(_vm._s(post.quantity) + "\n             ")
           ])
         }),
@@ -37900,11 +37909,7 @@ var render = function() {
           ref: "fishcart",
           staticClass: "btn mt-2",
           staticStyle: { background: "#16ADD6" },
-          on: {
-            click: function($event) {
-              return _vm.addToCart(_vm.item)
-            }
-          }
+          on: { click: _vm.addToCart }
         },
         [
           _c("i", { staticClass: "fas fa-shopping-basket text-white" }),
@@ -52291,6 +52296,12 @@ __webpack_require__.r(__webpack_exports__);
 var getters = {
   posts: function posts(state) {
     return state.posts;
+  },
+  cartTotalPrice: function cartTotalPrice(state) {
+    var total = 0;
+    state.cart.foreach(function (item) {
+      total += item.price * item.quantity;
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (getters);
@@ -52352,7 +52363,8 @@ var mutations = {
     state.posts.splice(index, 1);
   },
   addToCart: function addToCart(state, item) {
-    state.cart.push(item);
+    state.cart.push(item); //console.log("item before pushing:" , item);
+    //console.log("after pushing into cart:",state.cart);
   }
   /* ADD_TO_CART(state, { product, quantity})  {
       state.cart.push({
@@ -52401,8 +52413,8 @@ var state = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\zaynabfishfarm.com\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\zaynabfishfarm.com\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\zzaynabfishfarm.com\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\zzaynabfishfarm.com\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
