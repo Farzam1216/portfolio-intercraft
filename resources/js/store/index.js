@@ -1,6 +1,4 @@
-
-let cart = window.localStorage.getItem('cart');
-let cartCount = window.localStorage.getItem('cartCount');
+import createPersistedState from 'vuex-persistedstate'
 
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -9,14 +7,20 @@ import mutations from './mutations'
 import getters from './getters'
 import state from "./state";
 
+
 Vue.use(Vuex);
 
 
 
 export default new Vuex.Store({
     
+    plugins: [createPersistedState({
+        storage: window.sessionStorage,
+    })],
+    
     state,
     mutations,
     getters,
     actions
+    
 })

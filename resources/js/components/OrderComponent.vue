@@ -4,8 +4,8 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="fishtype"><i class="fas fa-fish"></i> &nbsp; Fish Type</label>
             </div>
-            <select @change="changeQuantity($event)" class="custom-select" id="fishtype" ref="fishtype">
-                <option disabled value="">Please select one</option>
+            <select v-model="selected" @change="changeQuantity($event)" class="custom-select" id="fishtype" ref="fishtype">
+                <option value="first">Please select one</option>
                 <option
                  v-for="post in posts"
                  :value="post.quantity" :data-fid ="post.id" :data-ftitle ="post.title" :data-fprice ="post.price">{{post.title}}(Rs.{{post.price}}/Kg)
@@ -48,7 +48,7 @@
             
         },
         data(){
-
+          selected: 'first'
             return {
                 
                 item: {}

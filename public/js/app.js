@@ -1982,7 +1982,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     removeFromCart: function removeFromCart(item) {
@@ -2091,6 +2090,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$store.dispatch('fetchPosts');
   },
   data: function data() {
+    selected: 'first';
+
     return {
       item: {}
     };
@@ -38388,10 +38389,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-4 price" }, [
             _c(
-              "span",
+              "a",
               {
-                staticClass: "removeBtn",
-                attrs: { title: "Remove from cart" },
+                staticClass: "badge badge-danger",
                 on: {
                   click: function($event) {
                     $event.preventDefault()
@@ -38399,7 +38399,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("X\n                ")]
+              [_vm._v("remove\n                ")]
             )
           ])
         ])
@@ -38517,17 +38517,40 @@ var render = function() {
       _c(
         "select",
         {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selected,
+              expression: "selected"
+            }
+          ],
           ref: "fishtype",
           staticClass: "custom-select",
           attrs: { id: "fishtype" },
           on: {
-            change: function($event) {
-              return _vm.changeQuantity($event)
-            }
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selected = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              function($event) {
+                return _vm.changeQuantity($event)
+              }
+            ]
           }
         },
         [
-          _c("option", { attrs: { disabled: "", value: "" } }, [
+          _c("option", { attrs: { value: "first" } }, [
             _vm._v("Please select one")
           ]),
           _vm._v(" "),
@@ -50727,6 +50750,21 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var r=function(r){return function(r){return!!r&&"object"==typeof r}(r)&&!function(r){var t=Object.prototype.toString.call(r);return"[object RegExp]"===t||"[object Date]"===t||function(r){return r.$$typeof===e}(r)}(r)},e="function"==typeof Symbol&&Symbol.for?Symbol.for("react.element"):60103;function t(r,e){return!1!==e.clone&&e.isMergeableObject(r)?c(Array.isArray(r)?[]:{},r,e):r}function n(r,e,n){return r.concat(e).map(function(r){return t(r,n)})}function o(r){return Object.keys(r).concat(function(r){return Object.getOwnPropertySymbols?Object.getOwnPropertySymbols(r).filter(function(e){return r.propertyIsEnumerable(e)}):[]}(r))}function u(r,e){try{return e in r}catch(r){return!1}}function c(e,i,a){(a=a||{}).arrayMerge=a.arrayMerge||n,a.isMergeableObject=a.isMergeableObject||r,a.cloneUnlessOtherwiseSpecified=t;var f=Array.isArray(i);return f===Array.isArray(e)?f?a.arrayMerge(e,i,a):function(r,e,n){var i={};return n.isMergeableObject(r)&&o(r).forEach(function(e){i[e]=t(r[e],n)}),o(e).forEach(function(o){(function(r,e){return u(r,e)&&!(Object.hasOwnProperty.call(r,e)&&Object.propertyIsEnumerable.call(r,e))})(r,o)||(i[o]=u(r,o)&&n.isMergeableObject(e[o])?function(r,e){if(!e.customMerge)return c;var t=e.customMerge(r);return"function"==typeof t?t:c}(o,n)(r[o],e[o],n):t(e[o],n))}),i}(e,i,a):t(i,a)}c.all=function(r,e){if(!Array.isArray(r))throw new Error("first argument should be an array");return r.reduce(function(r,t){return c(r,t,e)},{})};var i=c;/* harmony default export */ __webpack_exports__["default"] = (function(r){var e=(r=r||{}).storage||window&&window.localStorage,t=r.key||"vuex";(r.assertStorage||function(){e.setItem("@@",1),e.removeItem("@@")})(e);var n,o=function(){return(r.getState||function(r,e){var t;try{return(t=e.getItem(r))&&void 0!==t?JSON.parse(t):void 0}catch(r){}})(t,e)};return r.fetchBeforeUse&&(n=o()),function(u){r.fetchBeforeUse||(n=o()),"object"==typeof n&&null!==n&&(u.replaceState(r.overwrite?n:i(u.state,n,{arrayMerge:r.arrayMerger||function(r,e){return e},clone:!1})),(r.rehydrated||function(){})(u)),(r.subscriber||function(r){return function(e){return r.subscribe(e)}})(u)(function(n,o){(r.filter||function(){return!0})(n)&&(r.setState||function(r,e,t){return t.setItem(r,JSON.stringify(e))})(t,(r.reducer||function(r,e){return Array.isArray(e)?e.reduce(function(e,t){return function(r,e,t,n){return(e=e.split?e.split("."):e).slice(0,-1).reduce(function(r,e){return r[e]=r[e]||{}},r)[e.pop()]=t,r}(e,t,function(r,e,t){return void 0===(r=(e.split?e.split("."):e).reduce(function(r,e){return r&&r[e]},r))?void 0:r}(r,t))},{}):r})(o,r.paths),e)})}});
+//# sourceMappingURL=vuex-persistedstate.es.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/vuex/dist/vuex.esm.js":
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
@@ -52942,6 +52980,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var cart = window.localStorage.getItem('cart');
+var cartCount = window.localStorage.getItem('cartCount');
 var actions = {
   createPost: function createPost(_ref, post) {
     var commit = _ref.commit;
@@ -53018,27 +53058,30 @@ var getters = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
-/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/mutations.js");
-/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./getters */ "./resources/js/store/getters.js");
-/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./state */ "./resources/js/store/state.js");
-var cart = window.localStorage.getItem('cart');
-var cartCount = window.localStorage.getItem('cartCount');
+/* harmony import */ var vuex_persistedstate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex-persistedstate */ "./node_modules/vuex-persistedstate/dist/vuex-persistedstate.es.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
+/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/mutations.js");
+/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./getters */ "./resources/js/store/getters.js");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./state */ "./resources/js/store/state.js");
 
 
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
-  state: _state__WEBPACK_IMPORTED_MODULE_5__["default"],
-  mutations: _mutations__WEBPACK_IMPORTED_MODULE_3__["default"],
-  getters: _getters__WEBPACK_IMPORTED_MODULE_4__["default"],
-  actions: _actions__WEBPACK_IMPORTED_MODULE_2__["default"]
+
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
+  plugins: [Object(vuex_persistedstate__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    storage: window.sessionStorage
+  })],
+  state: _state__WEBPACK_IMPORTED_MODULE_6__["default"],
+  mutations: _mutations__WEBPACK_IMPORTED_MODULE_4__["default"],
+  getters: _getters__WEBPACK_IMPORTED_MODULE_5__["default"],
+  actions: _actions__WEBPACK_IMPORTED_MODULE_3__["default"]
 }));
 
 /***/ }),
@@ -53093,7 +53136,8 @@ var mutations = {
     }
 
     state.cart.push(item);
-    state.cartCount++; //console.log("item before pushing:" , item);
+    state.cartCount++;
+    this.commit('saveCart'); //console.log("item before pushing:" , item);
     //console.log("after pushing into cart:",state.cart);
   },
   removeFromCart: function removeFromCart(state, item) {
@@ -53103,8 +53147,9 @@ var mutations = {
       var product = state.cart[index];
       state.cartCount--;
       state.cart.splice(index, 1);
-    } //this.commit('saveCart');   
+    }
 
+    this.commit('saveCart');
   },
   saveCart: function saveCart(state) {
     window.localStorage.setItem('cart', JSON.stringify(state.cart));

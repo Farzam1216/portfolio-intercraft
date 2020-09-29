@@ -1,4 +1,3 @@
-
 let mutations = {
 
     
@@ -7,6 +6,7 @@ let mutations = {
     },
     FETCH_POSTS(state, posts) {
         return state.posts = posts
+        
     },
     DELETE_POST(state, post) {
         let index = state.posts.findIndex(item => item.id === post.id)
@@ -48,7 +48,7 @@ let mutations = {
 
         state.cartCount++;
 
-        
+        this.commit('saveCart');
         
         //console.log("item before pushing:" , item);
         //console.log("after pushing into cart:",state.cart);
@@ -65,7 +65,7 @@ let mutations = {
     
             state.cart.splice(index, 1);
         }
-        //this.commit('saveCart');   
+        this.commit('saveCart');   
     },
 
     saveCart(state) {
@@ -79,5 +79,8 @@ let mutations = {
             quantity
         })
     } */
+
+
 }
+
 export default mutations

@@ -1,3 +1,6 @@
+let cart = window.localStorage.getItem('cart');
+let cartCount = window.localStorage.getItem('cartCount');
+
 let actions = {
     createPost({commit}, post) {
         axios.post('/api/posts', post)

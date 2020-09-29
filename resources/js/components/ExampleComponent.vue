@@ -11,10 +11,9 @@
                     {{item.quantity}} x {{item.price}} 
                 </div>
                 <div class="col-4 price">
-                    <span class="removeBtn"
-                       title="Remove from cart"
-                       @click.prevent="removeFromCart(item)">X
-                    </span>
+                    <a class="badge badge-danger"
+                       @click.prevent="removeFromCart(item)">remove
+                    </a>
                 </div>
             </div>
         </div>
