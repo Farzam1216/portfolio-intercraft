@@ -188,7 +188,7 @@ AOS.init();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\zzaynabfishfarm.com\resources\js\site.js */"./resources/js/site.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\FishFarmStore\resources\js\site.js */"./resources/js/site.js");
 
 
 /***/ })
